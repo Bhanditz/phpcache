@@ -1,16 +1,14 @@
 <?php
-
 /**
  * Simple Cache class
- * API Documentation: https://github.com/cosenary/Simple-PHP-Cache
+ * API Documentation: https://github.com/rrrfff/phpcache
  * 
  * @author Christian Metz
  * @since 22.12.2011
  * @copyright Christian Metz - MetzWeb Networks
- * @version 1.6
+ * @version 1.6.1 (modified by rrrfff, 10.02.2015)
  * @license BSD http://www.opensource.org/licenses/bsd-license.php
  */
-
 class Cache {
 
   /**
@@ -59,10 +57,24 @@ class Cache {
    * @return boolean
    */
   public function isCached($key) {
-    if (false != $this->_loadCache()) {
-      $cachedData = $this->_loadCache();
-      return isset($cachedData[$key]['data']);
-    }
+  	//echo $key . ' isCached start</br>';
+  	if ($this->_loadCache()) {
+  		$cachedData = $this->_loadCache();
+  		//echo $cachedData . ' <== $cachedData</br>';
+  		if (is_array($cachedData) && array_key_exists($key, $cachedData)) {
+  			//print_r($cachedData);
+  			//echo '<br/>';
+  			$storeData = $cachedData[$key];
+  			//echo $storeData . ' <== $storeData </br>';
+  			if (is_array($storeData) && array_key_exists('data', $storeData)) {
+  				//print_r($storeData);
+  				//echo '<br/>';
+  				return true;
+  			}
+  		}
+  	}
+  	//echo $key . ' isCached failed</br>';
+  	return false;
   }
 
   /**
@@ -77,10 +89,10 @@ class Cache {
     $storeData = array(
       'time'   => time(),
       'expire' => $expiration,
-      'data'   => serialize($data)
+      'data'   => base64_encode($data)
     );
     $dataArray = $this->_loadCache();
-    if (true === is_array($dataArray)) {
+    if (is_array($dataArray)) {
       $dataArray[$key] = $storeData;
     } else {
       $dataArray = array($key => $storeData);
@@ -101,7 +113,7 @@ class Cache {
     $cachedData = $this->_loadCache();
     (false === $timestamp) ? $type = 'data' : $type = 'time';
     if (!isset($cachedData[$key][$type])) return null; 
-    return unserialize($cachedData[$key][$type]);
+    return base64_decode($cachedData[$key][$type]);
   }
 
   /**
@@ -116,7 +128,7 @@ class Cache {
       $cachedData = $this->_loadCache();
       if ($cachedData) {
         foreach ($cachedData as $k => $v) {
-          $results[$k] = unserialize($v['data']);
+          $results[$k] = base64_decode($v['data']);
         }
       }
       return $results;
