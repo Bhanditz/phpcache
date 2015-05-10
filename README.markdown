@@ -2,7 +2,7 @@
 
 ## About ##
 
-A light, simple but powerful PHP5 Cache Class which uses the filesystem for caching.  
+An improved, light, simple but powerful php cache class which uses the filesystem for caching.   
 Your feedback is always welcome.
 
 ## Requirements ##
@@ -93,12 +93,12 @@ So you can do something like that:
 `string` gives you the basic setup.  
 It's the name of your Cache (standard Cache name is *'default'*):
 
-    new Cache('YOUR-CACHE-NAME');
+    new Cache('your_cache_name');
 
 `array` allows you to define multiple optional parameters:
 
     new Cache(array(
-      'name'      => 'YOUR-CACHE-NAME',
+      'name'      => 'your_cache_name',
       'path'      => 'cache/',
       'extension' => '.cache'
     ));
@@ -111,7 +111,7 @@ If you don't define a Cache name with the constructor or the `setCache()` method
 
 - The `key` value defines a tag with which the cached data will be associated.
 - The `data` value can be any type of object (will be serialized).
-- The `expiration` value allows you to define an expiration time.
+- The `expiration` value allows you to define an expiration time (optional).
 
 To change data you can overwrite it by using the same key identifier.  
 Beside the data, the Cache will also store a timestamp.
@@ -191,6 +191,12 @@ cache/7505d64a54e061b7acd54ccd58b49dc43500b635.cache
 
 > Upcoming: Simple Cache 2.0  
 > Implementation of an internal "soft cache", hash-sum handling and the switch to serialization. Thanks @dariushha for his contribution!
+
+**Simple Cache 1.6.1 - 10/05/2015**
+
+- modified by rrrfff
+- replace `serialize/unserialize` with `base64_encode/base64_decode` to support chinese characters.
+- improved and `bug` Fixed `isCached()` method.
 
 **Simple Cache 1.6 - 04/01/2014**
 
