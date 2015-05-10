@@ -1,9 +1,9 @@
 {
-	"name": "cosenary/simple-php-cache",
+	"name": "rrrfff/phpcache",
 	"type": "library",
-	"description": "A light, simple but powerful PHP5 Cache Class which uses the filesystem for caching.",
-	"keywords": ["cache", "simple", "filesystem", "json"],
-	"homepage": "https://github.com/cosenary/Simple-PHP-Cache",
+	"description": "An improved, light, simple but powerful php cache class which uses the filesystem for caching.",
+	"keywords": ["cache", "simple", "filesystem", "json", "base64"],
+	"homepage": "https://github.com/rrrfff/phpcache",
 	"license": "BSD",
 	"authors": [
 		{
